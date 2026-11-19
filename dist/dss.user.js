@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DSS: Unified Script Manager
 // @namespace    http://tampermonkey.net/
-// @version      0.7.90
+// @version      0.7.91
 // @description  Unified manager for DSS (Dsuttz Scripts) modules
 // @author       Dsuttz [1561637]
 // @match        https://www.torn.com/*
@@ -28,7 +28,7 @@
 
 'use strict';
 // src/core/constants.js
-	var DSS_VERSION = "0.7.90";
+	var DSS_VERSION = "0.7.91";
 	var SETTINGS_KEY = "dss_settings";
 	var MODULES_KEY = "dss_modules";
 	var API_BASE = "https://api.torn.com/v2";
