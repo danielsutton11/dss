@@ -1,4 +1,5 @@
 import { registerModule } from '../../core/registry.js';
+import { gmRequest } from '../../core/request.js';
 import guide from './guide.html?raw';
 
 // ════════════════════════════════════════════════════════════════════════
@@ -159,7 +160,7 @@ init() {
             btn.setAttribute('aria-pressed', true);
         }
 
-        GM.xmlHttpRequest({
+        gmRequest({
             method: 'POST',
             url: API_URL,
             headers: { 'Content-Type': 'application/json' },

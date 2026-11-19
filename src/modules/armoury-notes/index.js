@@ -1,5 +1,6 @@
 import { IS_PDA, escHtml } from '../../core/constants.js';
 import { registerModule } from '../../core/registry.js';
+import { gmRequest, hasGmRequest } from '../../core/request.js';
 import { Storage } from '../../core/storage.js';
 import { UI } from '../../core/ui.js';
 import guide from './guide.html?raw';
@@ -80,16 +81,13 @@ init() {
 
     // ─── Cross-platform HTTP for the Railway server ────────────────────
     const IS_PDA_LOCAL = IS_PDA;
-    const GM_REQUEST =
-        typeof GM_xmlhttpRequest === 'function' ? GM_xmlhttpRequest :
-        (typeof GM !== 'undefined' && GM.xmlHttpRequest ? GM.xmlHttpRequest.bind(GM) : null);
 
     function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
     function serverRequest(method, path, body) {
         return new Promise((resolve, reject) => {
-            if (!GM_REQUEST) { reject(new Error('No GM_xmlhttpRequest available')); return; }
-            GM_REQUEST({
+            if (!hasGmRequest()) { reject(new Error('No GM_xmlhttpRequest available')); return; }
+            gmRequest({
                 method,
                 url: SERVER_BASE + path,
                 headers: {

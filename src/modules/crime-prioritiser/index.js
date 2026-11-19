@@ -1,5 +1,6 @@
 import { API_BASE, IS_PDA, tornAuth } from '../../core/constants.js';
 import { registerModule } from '../../core/registry.js';
+import { gmRequest } from '../../core/request.js';
 import { Storage } from '../../core/storage.js';
 import guide from './guide.html?raw';
 
@@ -829,13 +830,12 @@ init() {
     async function callOCAPI(endpoint, data = null, timeout = 10000) {
         return new Promise((resolve, reject) => {
             const timeoutId = setTimeout(() => reject(new Error('Timeout')), timeout);
-            GM.xmlHttpRequest({
+            gmRequest({
                 method: data ? 'POST' : 'GET',
                 url: `${API_BASE_URL}/${endpoint}`,
                 headers: data ? { 'Content-Type': 'application/json' } : {},
                 data: data ? JSON.stringify(data) : null,
                 onload: (response) => {
-                    if (!response) return; // PDA fires onload with undefined before real response
                     clearTimeout(timeoutId);
                     try {
                         const text = response?.responseText || response?.response || (typeof response === 'string' ? response : '');
@@ -1698,11 +1698,10 @@ init() {
 
     function fetchWeightData() {
         return new Promise((resolve, reject) => {
-            GM.xmlHttpRequest({
+            gmRequest({
                 method: "GET",
                 url: API_WEIGHTS_URL,
                 onload: (response) => {
-                    if (!response) return; // PDA fires onload with undefined before real response
                     try {
                         const text = response?.responseText || response?.response || (typeof response === 'string' ? response : '');
                         const data = JSON.parse(text);

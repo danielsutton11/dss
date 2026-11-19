@@ -9,6 +9,7 @@ Unified Torn userscript manager. The source lives in `src/`; `npm run build` pro
 npm install
 npm run build      # → dist/dss.user.js
 npm run watch      # rebuild on every save
+npm test           # unit tests (tests/*.test.js)
 ```
 
 Requires Node 20.19+ (Vite 8).
@@ -24,6 +25,7 @@ src/
     storage.js            Storage (GM_getValue/GM_setValue wrapper)
     loader.js             Loader — decides which modules run on the current page
     api.js                validateApiKey
+    request.js            gmRequest — GM.xmlHttpRequest wrapper (handles PDA quirks); use this for cross-origin calls
     sidebar.js            sidebar button + nav highlighting
     ui.js                 settings page UI, module icons/categories
     init.js               init()
@@ -39,7 +41,8 @@ vite.config.js            metadata (@match, @grant, @connect…) lives here
 
 1. Create `src/modules/<id>/index.js` calling `registerModule('<id>', { … })` and, if it has a guide,
    `src/modules/<id>/guide.html` + `import guide from './guide.html?raw';`.
-2. Import only what it uses from `../../core/…`.
+2. Import only what it uses from `../../core/…`. For cross-origin requests use `gmRequest` from
+   `core/request.js` rather than calling `GM.xmlHttpRequest` directly.
 3. Add `import './modules/<id>/index.js';` to `src/main.js`.
 4. Add its icon/category in `src/core/ui.js` (`MODULE_ICONS`, `MODULE_CATEGORIES`).
 5. If it calls a new host, add it to `connect` in `vite.config.js`.

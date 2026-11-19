@@ -1,5 +1,6 @@
 import { IS_PDA } from '../../core/constants.js';
 import { registerModule } from '../../core/registry.js';
+import { gmRequest, hasGmRequest } from '../../core/request.js';
 import { Storage } from '../../core/storage.js';
 import { UI } from '../../core/ui.js';
 import guide from './guide.html?raw';
@@ -212,11 +213,11 @@ init() {
     function httpPost(url, body) {
         const headers = { 'Content-Type': 'application/json' };
 
-        if (typeof GM !== 'undefined' && GM.xmlHttpRequest) {
+        if (hasGmRequest()) {
             return new Promise((resolve, reject) => {
-                GM.xmlHttpRequest({
+                gmRequest({
                     method: 'POST', url, headers, data: body, timeout: 15000,
-                    onload: (r) => { if (!r) return; resolve(r); }, // PDA fires onload once with undefined before the real response
+                    onload: resolve,
                     onerror: reject,
                     ontimeout: () => reject(new Error('timeout'))
                 });

@@ -8831,6 +8831,32 @@
 		}
 	});
 
+// src/core/request.js
+	function getTransport() {
+		if (typeof GM !== "undefined" && GM && typeof GM.xmlHttpRequest === "function") return GM.xmlHttpRequest.bind(GM);
+		if (typeof GM_xmlhttpRequest === "function") return GM_xmlhttpRequest;
+		return null;
+	}
+	/** True if a userscript-manager request function is available. */
+	function hasGmRequest() {
+		return getTransport() !== null;
+	}
+	function gmRequest(opts) {
+		const transport = getTransport();
+		if (!transport) {
+			setTimeout(() => opts.onerror && opts.onerror(new Error("No GM request function available")), 0);
+			return;
+		}
+		const onload = opts.onload;
+		return transport({
+			...opts,
+			onload: (response) => {
+				if (!response) return;
+				if (onload) onload(response);
+			}
+		});
+	}
+
 // src/modules/midnight-revive/guide.html?raw
 	var guide_default$12 = "\n        <div class=\"dss-guide-card\">\n            <div class=\"dss-guide-card-header\">What It Does</div>\n            <div class=\"dss-guide-card-body\">\n                <p>When you are in hospital, a green <strong>NITE Revive Me</strong> button is added to the top page links. Clicking it sends a revive request to <strong>Midnight X</strong>.</p>\n            </div>\n        </div>\n        <div class=\"dss-guide-card\">\n            <div class=\"dss-guide-card-header\">Payment</div>\n            <div class=\"dss-guide-card-body\">\n                <p>On a successful standard request you'll be asked to pay your reviver <strong>2 Xanax or $1.8m</strong>. Contract requests are handled without the payment prompt.</p>\n            </div>\n        </div>\n        <div class=\"dss-guide-card\">\n            <div class=\"dss-guide-card-header\">Third-Party Data Sharing</div>\n            <div class=\"dss-guide-card-body\">\n                <p>This module sends your <strong>Torn ID</strong> and <strong>username</strong> (read from the sidebar session data) to <strong>api.no1irishstig.co.uk</strong>, the Midnight X revive service, so a reviver can be dispatched. Your API key is never sent. If you disable this module, no data is sent.</p>\n            </div>\n        </div>\n        <div class=\"dss-guide-card\">\n            <div class=\"dss-guide-card-header\">Notes</div>\n            <div class=\"dss-guide-card-body\">\n                <p>The button only appears while you're in hospital and is removed automatically when you leave. It runs on every Torn page since hospital status can change anywhere.</p>\n            </div>\n        </div>\n    ";
 
@@ -8978,7 +9004,7 @@
 					btn.setAttribute("disabled", true);
 					btn.setAttribute("aria-pressed", true);
 				}
-				GM.xmlHttpRequest({
+				gmRequest({
 					method: "POST",
 					url: API_URL,
 					headers: { "Content-Type": "application/json" },
@@ -10093,13 +10119,12 @@
 			async function callOCAPI(endpoint, data = null, timeout = 1e4) {
 				return new Promise((resolve, reject) => {
 					const timeoutId = setTimeout(() => reject(new Error("Timeout")), timeout);
-					GM.xmlHttpRequest({
+					gmRequest({
 						method: data ? "POST" : "GET",
 						url: `${API_BASE_URL}/${endpoint}`,
 						headers: data ? { "Content-Type": "application/json" } : {},
 						data: data ? JSON.stringify(data) : null,
 						onload: (response) => {
-							if (!response) return;
 							clearTimeout(timeoutId);
 							try {
 								const text = response?.responseText || response?.response || (typeof response === "string" ? response : "");
@@ -10848,11 +10873,10 @@
 			}
 			function fetchWeightData() {
 				return new Promise((resolve, reject) => {
-					GM.xmlHttpRequest({
+					gmRequest({
 						method: "GET",
 						url: API_WEIGHTS_URL,
 						onload: (response) => {
-							if (!response) return;
 							try {
 								const text = response?.responseText || response?.response || (typeof response === "string" ? response : "");
 								const data = JSON.parse(text);
@@ -13565,17 +13589,16 @@
 			let MY_FACTION_ID = (Storage.getSettings().myFactionId || "").toString() || null;
 			let MY_FACTION_NAME = null;
 			const IS_PDA_LOCAL = IS_PDA;
-			const GM_REQUEST = typeof GM_xmlhttpRequest === "function" ? GM_xmlhttpRequest : typeof GM !== "undefined" && GM.xmlHttpRequest ? GM.xmlHttpRequest.bind(GM) : null;
 			function sleep(ms) {
 				return new Promise((r) => setTimeout(r, ms));
 			}
 			function serverRequest(method, path, body) {
 				return new Promise((resolve, reject) => {
-					if (!GM_REQUEST) {
+					if (!hasGmRequest()) {
 						reject(new Error("No GM_xmlhttpRequest available"));
 						return;
 					}
-					GM_REQUEST({
+					gmRequest({
 						method,
 						url: SERVER_BASE + path,
 						headers: {
@@ -18117,18 +18140,15 @@
 			}
 			function httpPost(url, body) {
 				const headers = { "Content-Type": "application/json" };
-				if (typeof GM !== "undefined" && GM.xmlHttpRequest) {
+				if (hasGmRequest()) {
 					return new Promise((resolve, reject) => {
-						GM.xmlHttpRequest({
+						gmRequest({
 							method: "POST",
 							url,
 							headers,
 							data: body,
 							timeout: 15e3,
-							onload: (r) => {
-								if (!r) return;
-								resolve(r);
-							},
+							onload: resolve,
 							onerror: reject,
 							ontimeout: () => reject(new Error("timeout"))
 						});
