@@ -1,0 +1,98 @@
+
+        <details class="an-guide-card">
+            <summary class="an-cfg-summary">What It Does</summary>
+            <div class="an-cfg-body">
+                <p>Adds shared notes to your faction's armoury items - a note, owner, category and colour per item. Everyone in your faction sees the same notes, because they are stored centrally rather than on your device.</p>
+                <p>Notes show on the <strong>Armoury</strong>, <strong>Inventory</strong> and <strong>Trade</strong> pages as a badge next to the item name; hover (or tap on mobile) the name to read the note. If your faction is part of a <strong>family</strong>, you also see items owned by other family factions, marked as loaned in.</p>
+            </div>
+        </details>
+        <details class="an-guide-card">
+            <summary class="an-cfg-summary">Adding &amp; Editing Notes (Writers)</summary>
+            <div class="an-cfg-body">
+                <p>Council and Leadership see a <strong>pencil</strong> button beside each item - click it to set the note, owner and category. Read-only members see the badges and notes but no button.</p>
+                <p><strong>Owner</strong> - search a player by name and the picker fills in their ID. For <strong>Member Owned</strong> items you can toggle between searching your current faction members or all of Torn. <strong>Faction Owned</strong> items are set to your faction automatically.</p>
+            </div>
+        </details>
+        <details class="an-guide-card">
+            <summary class="an-cfg-summary">Categories &amp; Colours</summary>
+            <div class="an-cfg-body">
+                <p>Three categories - <strong>Faction Owned</strong>, <strong>Member Owned</strong> and <strong>Loaned From</strong> - colour-code each item. Picking a category sets its colour automatically; leave it as <strong>None</strong> to choose a custom colour instead.</p>
+                <p>Colours are shared across your whole faction and can be changed by Leadership in the settings below.</p>
+            </div>
+        </details>
+        <details class="an-guide-card">
+            <summary class="an-cfg-summary">Loaned-In &amp; Family Sharing</summary>
+            <div class="an-cfg-body">
+                <p>If your faction is in a family, an item belonging to another family faction shows a loaned-in badge with that faction's name and a <strong>⇠</strong> marker, in the loaned-in colour.</p>
+                <p>These are <strong>read-only</strong>: the button becomes an <strong>eye</strong> - open it to see the true owner and note. The item should be returned to that faction after use.</p>
+            </div>
+        </details>
+        <details class="an-guide-card">
+            <summary class="an-cfg-summary">Retrieve &amp; Give (Writers)</summary>
+            <div class="an-cfg-body">
+                <p>On the <strong>Armoury</strong> tab, <strong>Retrieve items</strong> and <strong>Give items</strong> stage bulk actions one click at a time. Retrieve recalls loaned-out items; Give hands available items to a chosen member.</p>
+                <p>Both let you filter by mode (loaned-in, member owned, everything), item and owner, and skip individual items. Give also takes a quantity and a recipient. The buttons only appear when Torn shows the matching action, so they respect your faction permissions.</p>
+            </div>
+        </details>
+        <details class="an-guide-card">
+            <summary class="an-cfg-summary">Migrating Your Notes</summary>
+            <div class="an-cfg-body">
+                <p>Moved factions? <strong>Migrate Notes</strong> (on the Armoury tab) requests moving every note you own from other family factions into your current one. A leader of the origin faction approves it; the notes are then copied in and the originals released.</p>
+                <p>You will be able to edit them once your new faction's leadership grants you write access. <strong>Leaders</strong> see a flashing <strong>Approve migrations</strong> button when there are requests to move notes out of their faction.</p>
+            </div>
+        </details>
+        <details class="an-cfg-details">
+        <summary class="an-cfg-summary">Configuration &amp; Settings</summary>
+        <div class="dss-guide-card">
+            <div class="dss-guide-card-header">Account &amp; Access</div>
+            <div class="dss-guide-card-body">
+                <p id="an-access-summary" style="white-space:pre-line;">Loading access...</p>
+<div style="display:flex;gap:8px;align-items:center;margin:16px 0;flex-wrap:wrap;">
+    <span style="color:#777;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;min-width:90px;">Armoury key</span>
+    <input type="text" id="an-armoury-key" class="an-key-hidden" placeholder="Selects which faction's notes DB you use"
+        style="flex:1;min-width:200px;padding:8px 10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:4px;color:#ccc;font-size:12px;font-family:monospace;outline:none;" autocomplete="off" />
+    <button id="an-armoury-key-toggle" title="Show/hide" style="padding:8px 10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:4px;color:#ccc;font-size:12px;cursor:pointer;">👁</button>
+    <button id="an-armoury-key-save" style="padding:8px 16px;background:rgba(76,175,80,0.2);border:1px solid rgba(76,175,80,0.4);border-radius:4px;color:#4caf50;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;">Save</button>
+    <button id="an-access-refresh" style="padding:8px 12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:4px;color:#ccc;font-size:12px;cursor:pointer;white-space:nowrap;">Refresh Access</button>
+</div>
+                <p style="font-size:11px;color:#777;margin-top:6px;">Not the same as your Torn API key (which comes from the DSS Setup page). This selects which faction's shared notes you connect to — get it from whoever set up your faction's Armoury Notes.</p>
+                <div id="an-key-status" style="font-size:11px;min-height:16px;margin-top:4px;"></div>
+            </div>
+        </div>
+        <div class="dss-guide-card">
+            <div class="dss-guide-card-header">Show notes on these pages</div>
+            <div class="dss-guide-card-body">
+                <div class="an-page-toggle" style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><input type="checkbox" id="an-page-armoury"><label for="an-page-armoury">Faction Armoury</label></div>
+                <div class="an-page-toggle" style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><input type="checkbox" id="an-page-inventory"><label for="an-page-inventory">Inventory (Items page)</label></div>
+                <div class="an-page-toggle" style="display:flex;align-items:center;gap:8px;"><input type="checkbox" id="an-page-trade"><label for="an-page-trade">Trade window</label></div>
+                <p style="font-size:11px;color:#777;margin-top:8px;">Applies next time you load that page.</p>
+            </div>
+        </div>
+        <div class="dss-guide-card" id="an-categories-card" style="display:none;">
+            <div class="dss-guide-card-header">Category colours (Leadership)</div>
+            <div class="dss-guide-card-body">
+                <p style="font-size:11px;color:#777;margin-bottom:8px;">These colours are shared by everyone in your faction. Clearing a colour reverts it to the default.</p>
+                <div id="an-categories-list"></div>
+                <div id="an-categories-status" style="font-size:11px;min-height:16px;margin-top:4px;"></div>
+            </div>
+        </div>
+        <div class="dss-guide-card" id="an-leadership-card" style="display:none;">
+            <div class="dss-guide-card-header">Manage Access (Leadership)</div>
+            <div class="dss-guide-card-body">
+                <p style="font-size:11px;color:#777;margin-bottom:8px;">Add or remove Leadership and Council members. Changes apply for everyone.</p>
+                <button id="an-open-council" style="padding:8px 16px;background:rgba(96,165,250,0.15);border:1px solid rgba(96,165,250,0.4);border-radius:4px;color:#60a5fa;font-size:12px;font-weight:600;cursor:pointer;">Open Access Manager</button>
+            </div>
+        </div>
+        <div class="dss-guide-card" id="an-danger-card" style="display:none;">
+            <div class="dss-guide-card-header">Danger zone</div>
+            <div class="dss-guide-card-body">
+                <div class="an-page-toggle" style="display:flex;align-items:flex-start;gap:8px;margin-bottom:10px;">
+                    <input type="checkbox" id="an-deletion-mode" style="margin-top:2px;">
+                    <label for="an-deletion-mode" style="color:#ff8a80;">Deletion mode — note buttons delete instead of edit, on every page, until turned off.</label>
+                </div>
+                <button id="an-clear-cache" style="padding:8px 16px;background:rgba(220,70,70,0.18);border:1px solid rgba(220,70,70,0.4);border-radius:4px;color:#ff8a80;font-size:12px;cursor:pointer;">Clear Notes Cache</button>
+                <div id="an-danger-status" style="font-size:11px;min-height:16px;margin-top:6px;"></div>
+            </div>
+        </div>
+        </details>
+    

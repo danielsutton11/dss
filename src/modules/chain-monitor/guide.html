@@ -1,0 +1,52 @@
+
+        <div class="dss-guide-card">
+            <div class="dss-guide-card-header">Alert Thresholds (seconds remaining)</div>
+            <div class="dss-guide-card-body">
+                <p>Configure when each alert level triggers. Values are in <strong>seconds</strong> of chain time remaining.</p>
+                <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px;">
+                    <div style="display:flex;align-items:center;gap:8px;">
+                        <span style="color:#22c55e;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;width:60px;">Green</span>
+                        <input type="number" id="dss-chain-green" min="10" max="300" step="5" placeholder="105"
+                            style="width:80px;padding:6px 8px;background:rgba(255,255,255,0.06);border:1px solid rgba(34,197,94,0.3);border-radius:4px;color:#ccc;font-size:12px;font-family:monospace;outline:none;text-align:center;" />
+                        <span style="color:#666;font-size:11px;">seconds</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:8px;">
+                        <span style="color:#f97316;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;width:60px;">Orange</span>
+                        <input type="number" id="dss-chain-orange" min="10" max="300" step="5" placeholder="85"
+                            style="width:80px;padding:6px 8px;background:rgba(255,255,255,0.06);border:1px solid rgba(249,115,22,0.3);border-radius:4px;color:#ccc;font-size:12px;font-family:monospace;outline:none;text-align:center;" />
+                        <span style="color:#666;font-size:11px;">seconds</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:8px;">
+                        <span style="color:#ef4444;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;width:60px;">Red</span>
+                        <input type="number" id="dss-chain-red" min="10" max="300" step="5" placeholder="60"
+                            style="width:80px;padding:6px 8px;background:rgba(255,255,255,0.06);border:1px solid rgba(239,68,68,0.3);border-radius:4px;color:#ccc;font-size:12px;font-family:monospace;outline:none;text-align:center;" />
+                        <span style="color:#666;font-size:11px;">seconds (triggers target dialog)</span>
+                    </div>
+                    <div style="display:flex;gap:8px;margin-top:4px;">
+                        <button id="dss-chain-thresholds-save" style="padding:6px 16px;background:rgba(76,175,80,0.2);border:1px solid rgba(76,175,80,0.4);border-radius:4px;color:#4caf50;font-size:12px;font-weight:600;cursor:pointer;">Save</button>
+                        <button id="dss-chain-thresholds-reset" style="padding:6px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:4px;color:#999;font-size:12px;cursor:pointer;">Reset to Defaults</button>
+                    </div>
+                    <div id="dss-chain-thresholds-status" style="font-size:11px;min-height:16px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="dss-guide-card">
+            <div class="dss-guide-card-header">Chain Bar Alerts</div>
+            <div class="dss-guide-card-body">
+                <p>The chain bar pulses with colour-coded alerts as time runs down. Alerts only activate when the chain count is <strong>10 or higher</strong>.</p>
+                <p><strong style="color:#22c55e;">Green</strong> — gentle pulse. <strong style="color:#f97316;">Orange</strong> — faster pulse. <strong style="color:#ef4444;">Red</strong> — rapid flash with target dialog.</p>
+            </div>
+        </div>
+        <div class="dss-guide-card">
+            <div class="dss-guide-card-header">Random Target Dialog</div>
+            <div class="dss-guide-card-body">
+                <p>When the timer hits red, a dialog appears in the bottom-left with a random target ID. Click <strong>Attack</strong> to open the attack page, or <strong>New Target</strong> to roll a different ID.</p>
+            </div>
+        </div>
+        <div class="dss-guide-card">
+            <div class="dss-guide-card-header">Always Active</div>
+            <div class="dss-guide-card-body">
+                <p>This module runs on every Torn page since the chain bar is always visible. Alerts and the target dialog only show while the tab is focused.</p>
+            </div>
+        </div>
+    

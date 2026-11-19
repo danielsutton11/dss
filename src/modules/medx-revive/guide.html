@@ -1,0 +1,37 @@
+
+        <div class="dss-guide-card">
+            <div class="dss-guide-card-header">What It Does</div>
+            <div class="dss-guide-card-body">
+                <p><strong>Desktop:</strong> while you're in hospital, a red <strong>MEDX REVIVE ME</strong> button appears under your life bar in the sidebar, and a green link is added to the top page links next to NITE, on every page. On a hospitalised player's profile the link reads <strong>MEDX Revive Player</strong> and requests a revive for that player instead.</p>
+                <p><strong>Phone / Torn PDA:</strong> a round red button floats in the bottom-right corner while you're in hospital, or while you're viewing a hospitalised player's profile.</p>
+                <p>One press sends the request. The button turns grey while sending and green for 10 seconds once Med X accepts it, so a double tap can't send twice.</p>
+            </div>
+        </div>
+        <div class="dss-guide-card">
+            <div class="dss-guide-card-header">Layout</div>
+            <div class="dss-guide-card-body">
+                <p>The layout is picked automatically from your device. If it guesses wrong (for example on a tablet or a touchscreen laptop), set it here.</p>
+                <div style="display:flex;align-items:center;gap:8px;margin-top:10px;">
+                    <span style="color:#777;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;width:60px;">Layout</span>
+                    <select id="dss-medx-layout" style="padding:6px 8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:4px;color:#ccc;font-size:12px;">
+                        <option value="auto">Auto</option>
+                        <option value="desktop">Desktop (life bar button)</option>
+                        <option value="phone">Phone (floating button)</option>
+                    </select>
+                </div>
+                <div id="dss-medx-layout-status" style="font-size:11px;color:#4caf50;min-height:14px;margin-top:6px;"></div>
+            </div>
+        </div>
+        <div class="dss-guide-card">
+            <div class="dss-guide-card-header">Payment</div>
+            <div class="dss-guide-card-body">
+                <p>Revives cost <strong>2 Xanax or $1.8m per attempt</strong>, paid to your reviver.</p>
+            </div>
+        </div>
+        <div class="dss-guide-card">
+            <div class="dss-guide-card-header">Third-Party Data Sharing</div>
+            <div class="dss-guide-card-body">
+                <p>Each request sends the API key from your DSS Setup page, your <strong>Torn ID</strong> and <strong>username</strong>, and the ID of the player to revive to <strong>medx.fun</strong>, the Med X revive service. Nothing is sent until you press a Revive button, and nothing is sent at all while this module is disabled.</p>
+            </div>
+        </div>
+    

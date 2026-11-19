@@ -1,0 +1,33 @@
+
+        <div class="dss-guide-card">
+            <div class="dss-guide-card-header">Price Sorting</div>
+            <div class="dss-guide-card-body">
+                <p>A sort button appears next to the item search bar. Click to cycle through:</p>
+                <p><strong>Unsorted</strong> → <strong style="color:#90ee90;">High → Low</strong> → <strong style="color:#ee9090;">Low → High</strong> → back to Unsorted.</p>
+                <p>On mobile / PDA the button shows as a compact symbol (<strong>⇅</strong> → <strong>$↓</strong> → <strong>$↑</strong>) to fit the toolbar.</p>
+                <p>Sorting carries over when switching item tabs. The original order is preserved and can be restored.</p>
+            </div>
+        </div>
+        <div class="dss-guide-card">
+            <div class="dss-guide-card-header">Stacks &amp; Totals</div>
+            <div class="dss-guide-card-body">
+                <p>Stacks sort by their <strong>total</strong> value — unit price × quantity — so a pile of 500 cheap items is ranked by what the whole pile is worth, not by the single-item price. Single items sort by their unit price.</p>
+                <p>Each stack shows both figures: <strong>unit price | quantity× = total</strong>.</p>
+            </div>
+        </div>
+        <div class="dss-guide-card">
+            <div class="dss-guide-card-header">Price Data Source</div>
+            <div class="dss-guide-card-body">
+                <p><strong>Desktop:</strong> reads price data injected by the <strong>TornTools</strong> browser extension. Install it from the <a href="https://chromewebstore.google.com/detail/torn-tools/hjpaapdjcgbmeikfnahipphknonhlhib" target="_blank" style="color:var(--link-color,#60a5fa);">Chrome Web Store</a> or <a href="https://addons.mozilla.org/en-GB/firefox/addon/torn-tools/" target="_blank" style="color:var(--link-color,#60a5fa);">Firefox Add-ons</a>.</p>
+                <p><strong>Mobile / Torn PDA:</strong> TornTools isn't available, so prices are pulled from the Torn API (<code>/torn/items</code>) using the API key set on the DSS <strong>Setup</strong> page, and shown as a small tag at the right of each row.</p>
+                <p>Items with no market price (untradeable or event items) show <strong style="color:#888;font-style:italic;">N/A</strong> and sort to the bottom.</p>
+            </div>
+        </div>
+        <div class="dss-guide-card">
+            <div class="dss-guide-card-header">Daily Prices &amp; Freshness</div>
+            <div class="dss-guide-card-body">
+                <p>Market prices update roughly once a day, so the data is cached and refreshed at most once per day — on your first visit to the items page each day. Repeat visits use the cache and make no extra API calls.</p>
+                <p>If a daily refresh fails (no connection, API error), the last saved prices are used instead. When that happens the prices turn <strong style="color:#d9756b;">red</strong> and a banner shows the date the data is from — reload the page to try refreshing again.</p>
+            </div>
+        </div>
+    

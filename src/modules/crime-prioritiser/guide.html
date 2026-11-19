@@ -1,0 +1,77 @@
+
+        <div class="dss-guide-card">
+            <div class="dss-guide-card-header">What It Does</div>
+            <div class="dss-guide-card-body">
+                <p>On the faction <strong>Organized Crimes</strong> page, this module:</p>
+                <p>• Sorts crime role slots by <strong>weight priority</strong> (highest weight first) so you can quickly see which roles matter most.</p>
+                <p>• Adds a <strong>weight label</strong> above each role slot showing the role's contribution percentage.</p>
+                <p>• Colour-codes each slot's left border from <strong>green</strong> (highest weight) to <strong>red</strong> (lowest weight).</p>
+                <p>• Calculates and displays the overall <strong>success chance</strong> for each crime based on the filled slots' CPR values.</p>
+            </div>
+        </div>
+        <div class="dss-guide-card">
+            <div class="dss-guide-card-header">Recruiting Panel Ordering</div>
+            <div class="dss-guide-card-body">
+                <p>On the <strong>Recruiting</strong> panel, crimes are reordered by <strong>pause priority</strong>:</p>
+                <p>• <strong>Paused</strong> crimes go to the top (fewest empty slots first) with a red outline.</p>
+                <p>• Crimes that will <strong>pause within 24h</strong> come next, soonest first.</p>
+                <p>• Crimes still <strong>recruiting</strong> (no countdown yet) follow, fewest empty slots first.</p>
+                <p>• Crimes that pause <strong>more than 24h</strong> out go last, soonest first.</p>
+                <p>Each crime gets a label such as <em>Priority #1 - Paused</em>, <em>Priority #2 - 5h 12m</em> or <em>Priority #3 - Recruiting</em>. Pause time is the execution countdown minus 24h for each empty slot.</p>
+            </div>
+        </div>
+        <div class="dss-guide-card">
+            <div class="dss-guide-card-header">OC Join Reminder (all pages)</div>
+            <div class="dss-guide-card-body">
+                <p>While this module is enabled, a reminder also runs on <strong>every</strong> Torn page. Whenever you're not currently in an organised crime, a blue prompt appears with a button that takes you straight to your faction's crimes page to join one. Dismissing it (the × or Dismiss button) hides it for 2 minutes, after which it returns if you still haven't joined.</p>
+                <p>It's tied to this module — there's no separate switch. It uses the API key from the DSS Setup page and is deliberately sparing with it: the result is cached and shared across all your open tabs, and while you're already in a crime it barely checks at all, waiting until the crime is due to be ready before looking again.</p>
+            </div>
+        </div>
+        <div class="dss-guide-card">
+            <div class="dss-guide-card-header">Completed Crimes</div>
+            <div class="dss-guide-card-body">
+                <p>On the <strong>Completed</strong> tab, each crime shows a <strong>Completed: date time</strong> badge to the left of its success box, read from the Torn API's <em>executed_at</em> value.</p>
+                <p>A <strong>date filter</strong> above the list lets you show only crimes completed within a <strong>From</strong>–<strong>To</strong> date range. Both bounds are inclusive of the whole day.</p>
+            </div>
+        </div>
+        <div class="dss-guide-card">
+            <div class="dss-guide-card-header">Join Button Restrictions</div>
+            <div class="dss-guide-card-body">
+                <p>For <strong>Family X</strong> members, join buttons are <strong>disabled</strong> when your CPR is below the minimum required for that role.</p>
+                <p>Hover (or tap on mobile) a disabled button to see the required CPR. This prevents members from joining roles they aren't ready for.</p>
+                <p>For all other factions, role sorting and weight labels still work but join buttons are never restricted.</p>
+            </div>
+        </div>
+        <div class="dss-guide-card">
+            <div class="dss-guide-card-header">Low CPR Highlighting</div>
+            <div class="dss-guide-card-body">
+                <p>When enabled, members on the <strong>Recruiting</strong> and <strong>Planning</strong> tabs whose CPR is below the minimum set for their role get a <strong>red outline</strong> and a <em>CPR x / min y</em> strip at the bottom of their slot.</p>
+                <p>Open slots, unpaid roles and the Completed tab are ignored. Applies to the same factions as the join button restrictions.</p>
+                <label style="display:flex;align-items:center;gap:8px;margin-top:10px;cursor:pointer;">
+                    <input type="checkbox" id="dss-oc-lowcpr-toggle" style="cursor:pointer;" />
+                    <span>Highlight members below minimum CPR</span>
+                </label>
+                <div id="dss-oc-lowcpr-status" style="margin-top:6px;font-size:11px;min-height:16px;"></div>
+            </div>
+        </div>
+        <div class="dss-guide-card">
+            <div class="dss-guide-card-header">Success Chance Display</div>
+            <div class="dss-guide-card-body">
+                <p>A colour-coded <strong>Success: XX%</strong> badge appears on each crime panel, calculated from the CPR values of all filled slots using the <em>tornprobability.com</em> API.</p>
+                <p>Colours range from green (90%+) through yellow/orange to red (&lt;40%).</p>
+            </div>
+        </div>
+            <div class="dss-guide-card">
+        <div class="dss-guide-card-header">Third-Party Data Sharing</div>
+        <div class="dss-guide-card-body">
+            <p>To calculate success chances, this module sends crime <strong>role names</strong> and <strong>CPR success-chance values</strong> (read from the page) to <a href="https://tornprobability.com" target="_blank" style="color:var(--link-color,#60a5fa);">tornprobability.com</a>. Your <strong>API key is never sent</strong> to this service — only the numeric values needed for the calculation.</p>
+            <p>This data is shared with the tornprobability service owners under <a href="https://www.torn.com/forums.php#/p=threads&f=67&t=16449041&b=0&a=0" target="_blank" style="color:var(--link-color,#60a5fa);">their terms of service</a>. If you disable this module, no data is sent.</p>
+        </div>
+        </div>
+        <div class="dss-guide-card">
+            <div class="dss-guide-card-header">Keyboard Shortcut</div>
+            <div class="dss-guide-card-body">
+                <p>Press <strong>Ctrl+Shift+P</strong> to force a re-process of all visible crimes (useful if the page updated and sorting didn't trigger).</p>
+            </div>
+        </div>
+    

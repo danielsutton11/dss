@@ -1,0 +1,62 @@
+
+    <div class="dss-guide-card">
+        <div class="dss-guide-card-header">War Page - Online Visibility</div>
+        <div class="dss-guide-card-body">
+            <p>On faction war pages, a collapsible <strong>Online Status</strong> bar appears showing online/idle/offline counts for both sides. Click <strong>Sort</strong> to reorder members by online status.</p>
+            <p>Configure the <strong>Mobilisation Alert</strong> to get a warning when enemy online % exceeds your threshold.</p>
+        </div>
+    </div>
+    <div class="dss-guide-card">
+        <div class="dss-guide-card-header">Attack Page - Button Positioning</div>
+        <div class="dss-guide-card-body">
+            <p>Toggle <strong>Fight</strong> on/off to reposition attack buttons over your chosen weapon slot (Primary/Secondary/Melee). Select a <strong>Type</strong> to show only that button (Leave/Mug/Hosp/Arrest) or All.</p>
+        </div>
+    </div>
+    <div class="dss-guide-card">
+        <div class="dss-guide-card-header">Attack Page - Execute Alert</div>
+        <div class="dss-guide-card-body">
+            <p>Toggle <strong>Execute</strong> on and set a <strong>%</strong> threshold. When the target's health drops below that percentage, the Secondary weapon slot highlights red as a visual cue to finish the fight.</p>
+        </div>
+    </div>
+    <div class="dss-guide-card">
+        <div class="dss-guide-card-header">Mobile HUD</div>
+        <div class="dss-guide-card-body">
+            <p>On mobile attack pages, an extra HUD row shows the number of <strong>Attackers</strong> in the loader, the enemy's <strong>Loadout</strong> with weapon bonuses highlighted (Parry and Bloodlust flagged as dangers), and active <strong>Effects</strong> on you.</p>
+            <p>Vision effects like <strong>Smoked</strong> and <strong>Blinded</strong> are highlighted in red. DOT effects like <strong>Bleeding</strong> and <strong>Burning</strong> appear in orange.</p>
+        </div>
+    </div>
+    <div class="dss-guide-card">
+            <div class="dss-guide-card-header">Attack Page - Hospital Timer</div>
+            <div class="dss-guide-card-body">
+            <p>When your target is in hospital, a <strong>countdown timer</strong> appears in the attack page header showing their remaining hospital time. A <strong>Reload</strong> button appears alongside it.</p>
+                  <p>At <strong>10 seconds</strong> remaining, the timer flashes green. If the target leaves hospital early, the timer changes to <strong>Target out of Hospital!</strong></p>
+              </div>
+          </div>
+          <div class="dss-guide-card">
+              <div class="dss-guide-card-header">Profile Page - Attack Button Override</div>
+              <div class="dss-guide-card-body">
+                  <p>When viewing the profile of a player who is in hospital, the greyed-out <strong>Attack</strong> button is re-enabled with a blue glow (hover tooltip: <strong>"Bypass — Click to Attack"</strong>) so you can click through to the attack page anyway.</p>
+              </div>
+          </div>
+       <div class="dss-guide-card">
+        <div class="dss-guide-card-header">War Page - Hospital Timers</div>
+        <div class="dss-guide-card-body">
+            <p>On faction war pages, <strong>Hospital</strong> in the status column is replaced with a live countdown (red, turning <strong>green</strong> in the last 5 minutes). Revives and status changes are picked up automatically.</p>
+            <p>Uses two or three API calls per refresh (not one per player), only while the tab is focused and someone is in hospital. <strong>Sort</strong> still works and orders hospitalised players by who gets out first.</p>
+        </div>
+    </div>
+        <div class="dss-guide-card">
+        <div class="dss-guide-card-header">War Page - Hospital Timers</div>
+        <div class="dss-guide-card-body">
+            <p>On faction war pages, <strong>Hospital</strong> in the status column is replaced with a live countdown (red, turning <strong>green</strong> in the last 5 minutes). Revives and status changes are picked up automatically.</p>
+            <p>Uses two or three API calls per refresh (not one per player), only while the tab is focused and someone is in hospital. <strong>Sort</strong> still works and orders hospitalised players by who gets out first.</p>
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-top:10px;">
+                <input type="checkbox" id="dss-ae-hosp-timers">
+                <span>Enable hospital timers <span style="color:#777;">(turn off if you use CAT)</span></span>
+            </label>
+            <div id="dss-ae-hosp-timers-status" style="font-size:11px;color:#4caf50;min-height:14px;margin-top:4px;"></div>
+        </div>
+    </div>
+
+
+    

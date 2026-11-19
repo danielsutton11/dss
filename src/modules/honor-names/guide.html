@@ -1,0 +1,50 @@
+
+        <div class="dss-guide-card">
+            <div class="dss-guide-card-header">Display Mode</div>
+            <div class="dss-guide-card-body">
+                <p><strong>Overlay</strong> — keeps the honor bar artwork (slightly dimmed) and puts the name on top in a clear font with a dark pill behind it.</p>
+                <p><strong>Plain</strong> — hides the artwork and shows just the name. Most readable, best for dense lists.</p>
+                <p><strong>Hover</strong> — bars look normal; hover (or tap) one to see the clean name.</p>
+                <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px;">
+                    <label style="display:flex;align-items:center;gap:8px;">
+                        <span style="color:#777;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;width:110px;">Mode</span>
+                        <select id="dss-hn-mode" style="padding:6px 8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:4px;color:#ccc;font-size:12px;">
+                            <option value="overlay">Overlay</option>
+                            <option value="plain">Plain</option>
+                            <option value="hover">Hover</option>
+                        </select>
+                    </label>
+                    <label style="display:flex;align-items:center;gap:8px;">
+                        <span style="color:#777;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;width:110px;">Text size</span>
+                        <input type="range" id="dss-hn-scale" min="70" max="150" step="5" style="width:140px;">
+                        <span id="dss-hn-scale-val" style="color:#aaa;font-size:11px;min-width:36px;"></span>
+                    </label>
+                    <label style="display:flex;align-items:center;gap:8px;">
+                        <span style="color:#777;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;width:110px;">Pill opacity</span>
+                        <input type="range" id="dss-hn-bg" min="0" max="100" step="5" style="width:140px;">
+                        <span id="dss-hn-bg-val" style="color:#aaa;font-size:11px;min-width:36px;"></span>
+                    </label>
+                    <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                        <input type="checkbox" id="dss-hn-colour">
+                        <span style="font-size:12px;">Colour names by honor bar colour</span>
+                    </label>
+                    <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                        <input type="checkbox" id="dss-hn-war">
+                        <span style="font-size:12px;">Show readable names on the faction war page</span>
+                    </label>
+                    <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                        <input type="checkbox" id="dss-hn-self">
+                        <span style="font-size:12px;">Highlight my row on the faction war page</span>
+                    </label>
+                    <div style="font-size:11px;color:#4caf50;min-height:14px;" id="dss-hn-status"></div>
+                </div>
+            </div>
+        </div>
+        <div class="dss-guide-card">
+            <div class="dss-guide-card-header">Notes</div>
+            <div class="dss-guide-card-body">
+                <p>Changes apply instantly on open pages. Long names are truncated with an ellipsis; the full name is still in the link's tooltip.</p>
+                <p>This only adds a label on top of Torn's honor bars — it doesn't change or remove Torn's own elements, so other scripts keep working.</p>
+            </div>
+        </div>
+    

@@ -1,0 +1,45 @@
+
+        <div class="dss-guide-card">
+            <div class="dss-guide-card-header">Cash Threshold</div>
+            <div class="dss-guide-card-body">
+                <p>Set the cash amount that triggers the alert. You'll be notified when your cash on hand exceeds this value.</p>
+                <div style="display:flex;gap:8px;align-items:center;margin-top:10px;">
+                    <span style="color:#777;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;flex-shrink:0;">Threshold</span>
+                    <input type="text" inputmode="numeric" id="dss-cash-threshold-input" placeholder="$1,000,000"
+                        style="width:160px;padding:8px 10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:4px;color:#ccc;font-size:12px;font-family:monospace;outline:none;" />
+                    <button id="dss-cash-threshold-save" style="padding:8px 16px;background:rgba(76,175,80,0.2);border:1px solid rgba(76,175,80,0.4);border-radius:4px;color:#4caf50;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;">Save</button>
+                </div>
+                <div id="dss-cash-threshold-status" style="margin-top:6px;font-size:11px;min-height:16px;"></div>
+            </div>
+        </div>
+        <div class="dss-guide-card">
+            <div class="dss-guide-card-header">Dismiss Cooldown</div>
+            <div class="dss-guide-card-body">
+                <p>After you dismiss the alert, it won't reappear for this long — even if your cash is still over the threshold. Set it in seconds.</p>
+                <div style="display:flex;gap:8px;align-items:center;margin-top:10px;">
+                    <span style="color:#777;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;flex-shrink:0;">Cooldown</span>
+                    <input type="number" id="dss-cash-cooldown-input" min="5" step="5" placeholder="300"
+                        style="width:100px;padding:8px 10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:4px;color:#ccc;font-size:12px;font-family:monospace;outline:none;" />
+                    <span style="color:#666;font-size:11px;">seconds</span>
+                    <button id="dss-cash-cooldown-save" style="padding:8px 16px;background:rgba(76,175,80,0.2);border:1px solid rgba(76,175,80,0.4);border-radius:4px;color:#4caf50;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;">Save</button>
+                </div>
+                <div id="dss-cash-cooldown-status" style="margin-top:6px;font-size:11px;min-height:16px;"></div>
+            </div>
+        </div>
+        <div class="dss-guide-card">
+            <div class="dss-guide-card-header">How It Works</div>
+            <div class="dss-guide-card-body">
+                <p>When your cash on hand exceeds the threshold, a green alert dialog appears in the top-left with your current balance and three quick actions:</p>
+                <p><strong>Vault</strong> — navigates to your property vault and sets the max deposit, you must click deposit.</p>
+                <p><strong>Faction Vault</strong> — navigates to the faction armoury vault and sets the max deposit, you must click deposit.</p>
+                <p><strong>Trade</strong> — navigates to the trade page, for you to add to a ghost trade.</p>
+            </div>
+        </div>
+        <div class="dss-guide-card">
+            <div class="dss-guide-card-header">Alert Behaviour</div>
+            <div class="dss-guide-card-body">
+                <p>Dismissing the alert (the × button or Dismiss button) starts the cooldown set above. The cooldown is shared across all open tabs, so dismissing in one tab silences the alert everywhere.</p>
+                <p>This module runs on every Torn page since cash is always visible in the sidebar.</p>
+            </div>
+        </div>
+    

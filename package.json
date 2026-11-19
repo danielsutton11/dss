@@ -1,0 +1,17 @@
+{
+  "name": "dss",
+  "version": "0.7.9",
+  "description": "DSS (Dsuttz Scripts) \u2014 unified Torn userscript manager",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "scripts": {
+    "build": "vite build",
+    "watch": "vite build --watch"
+  },
+  "devDependencies": {
+    "vite": "^8.3.8"
+  }
+}
