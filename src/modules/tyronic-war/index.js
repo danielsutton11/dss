@@ -1166,6 +1166,8 @@ for (const f of [state.home_faction, state.away_faction]) {
   for (const m of f.members || []) {
     const row = L.rows[m.player_id];
     if (!row) continue;
+    // Torn's API says where a hospital is ("In a Swiss hospital for …"); note it even when we don't apply the row.
+    if (row.status && row.status.state === 'Hospital' && m.status_state === 'Hospital') noteHospAbroad(m.player_id, row.status.description);
     // fallback: Torn's data wins. Otherwise only borrow a timer for someone the list just put in hospital/jail.
     if (liveOn || (m.until_unknown && row.status && row.status.state === m.status_state && row.status.until * 1000 > now)) liveApplyRow(m, row);
   }
@@ -1186,6 +1188,7 @@ onlineApply();                                       // and on online / idle / o
   // Travel and everything else still come from Tyronic. Disagreements also tell us when Tyronic is stale (liveHealth).
   const LIVE_TIMER_MS = 10000;
   const liveNeed = {};                                   // factionId -> true when a flip needs a timer
+  const hospAbroad = {};                                 // playerId -> country they're in hospital in (see abroadOf)
   const tornSeen = {};                                   // playerId -> { st, t (since), at (heard), src, until, reason }
   const tornChanged = [];                                // ids whose state changed since the last tornTick
   let domLastScan = 0, wsLastMsg = 0;
@@ -1516,7 +1519,11 @@ for (const f of [state.home_faction, state.away_faction]) for (const m of (f && 
       status_until: '1970-01-01T00:00:00+00:00', until_unknown: false });
     done.push(m.player_id);
   } else if (HJ(d.st)) {
-    const base = { status_state: d.st, status_color: 'red', status_description: d.st === 'Jail' ? 'In jail' : 'In hospital' };
+    // Hospitalised while abroad: they're in hospital in the country they were in.
+    if (d.st === 'Hospital' && m.status_state === 'Abroad' && m.travel_destination) hospAbroad[m.player_id] = m.travel_destination;
+    // Keep a more specific description we already have (e.g. "In a Swiss hospital for …") rather than the generic one.
+    const sameDesc = m.status_state === d.st && /hospital|jail/i.test(plain(m.status_description)) ? m.status_description : null;
+    const base = { status_state: d.st, status_color: 'red', status_description: sameDesc || (d.st === 'Jail' ? 'In jail' : 'In hospital') };
     if (d.until) {                                                        // exact timer from the websocket
       if (d.until <= now) continue;
       if (m.status_state === d.st && timed && Math.abs(until - d.until) < 5000) continue;
@@ -2105,16 +2112,21 @@ return `Self-hosp \u00b7 ${hit ? hit[1] : (d.length > 28 ? d.slice(0, 27) + '\u2
   const DEMONYM = { 'mexican': 'mexico', 'caymanian': 'cayman islands', 'canadian': 'canada', 'hawaiian': 'hawaii',
     'british': 'united kingdom', 'argentinian': 'argentina', 'argentine': 'argentina', 'swiss': 'switzerland',
     'japanese': 'japan', 'chinese': 'china', 'emirati': 'uae', 'south african': 'south africa' };
-  const hospAbroad = {};   // player_id -> country, kept while they stay in hospital (Torn's list only says "In hospital")
   function abroadOf(m) {
     const id = m.player_id;
     if (m.status_state === 'Abroad') { delete hospAbroad[id]; return m.travel_destination || '?'; }
     if (m.status_state !== 'Hospital') { delete hospAbroad[id]; return null; }
     const desc = plain(m.status_description);
+    if (desc === 'In hospital') return hospAbroad[id] || null;   // placeholder from Torn's list/websocket: keep what we knew
+    return noteHospAbroad(id, desc);
+  }
+  // Learn from a hospital description: "In a Swiss hospital for …" = abroad, "In hospital for …" = in Torn.
+  function noteHospAbroad(id, description) {
+    const desc = plain(description);
     const hit = desc.match(/^In an? (.+?) hospital\b/i);
     if (hit) return (hospAbroad[id] = DEMONYM[hit[1].toLowerCase()] || hit[1]);
-    if (desc === 'In hospital') return hospAbroad[id] || null;   // placeholder from Torn's list: keep what we knew
-    delete hospAbroad[id]; return null;                            // "In hospital for …": in Torn
+    if (/^In hospital\b/i.test(desc) && desc !== 'In hospital') delete hospAbroad[id];
+    return hospAbroad[id] || null;
   }
   function abroadFlag(m) {
     const where = abroadOf(m);

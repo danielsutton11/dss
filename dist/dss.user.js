@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DSS: Unified Script Manager
 // @namespace    http://tampermonkey.net/
-// @version      0.7.92
+// @version      0.7.93
 // @description  Unified manager for DSS (Dsuttz Scripts) modules
 // @author       Dsuttz [1561637]
 // @match        https://www.torn.com/*
@@ -28,7 +28,7 @@
 
 'use strict';
 // src/core/constants.js
-	var DSS_VERSION = "0.7.92";
+	var DSS_VERSION = "0.7.93";
 	var SETTINGS_KEY = "dss_settings";
 	var MODULES_KEY = "dss_modules";
 	var API_BASE = "https://api.torn.com/v2";
@@ -2783,6 +2783,7 @@
 						for (const m of f.members || []) {
 							const row = L.rows[m.player_id];
 							if (!row) continue;
+							if (row.status && row.status.state === "Hospital" && m.status_state === "Hospital") noteHospAbroad(m.player_id, row.status.description);
 							if (liveOn || m.until_unknown && row.status && row.status.state === m.status_state && row.status.until * 1e3 > now) liveApplyRow(m, row);
 						}
 					}
@@ -2791,6 +2792,7 @@
 				}
 				const LIVE_TIMER_MS = 1e4;
 				const liveNeed = {};
+				const hospAbroad = {};
 				const tornSeen = {};
 				const tornChanged = [];
 				let domLastScan = 0, wsLastMsg = 0;
@@ -3261,10 +3263,12 @@
 							});
 							done.push(m.player_id);
 						} else if (HJ(d.st)) {
+							if (d.st === "Hospital" && m.status_state === "Abroad" && m.travel_destination) hospAbroad[m.player_id] = m.travel_destination;
+							const sameDesc = m.status_state === d.st && /hospital|jail/i.test(plain(m.status_description)) ? m.status_description : null;
 							const base = {
 								status_state: d.st,
 								status_color: "red",
-								status_description: d.st === "Jail" ? "In jail" : "In hospital"
+								status_description: sameDesc || (d.st === "Jail" ? "In jail" : "In hospital")
 							};
 							if (d.until) {
 								if (d.until <= now) continue;
@@ -4187,7 +4191,6 @@
 					"emirati": "uae",
 					"south african": "south africa"
 				};
-				const hospAbroad = {};
 				function abroadOf(m) {
 					const id = m.player_id;
 					if (m.status_state === "Abroad") {
@@ -4199,11 +4202,15 @@
 						return null;
 					}
 					const desc = plain(m.status_description);
+					if (desc === "In hospital") return hospAbroad[id] || null;
+					return noteHospAbroad(id, desc);
+				}
+				function noteHospAbroad(id, description) {
+					const desc = plain(description);
 					const hit = desc.match(/^In an? (.+?) hospital\b/i);
 					if (hit) return hospAbroad[id] = DEMONYM[hit[1].toLowerCase()] || hit[1];
-					if (desc === "In hospital") return hospAbroad[id] || null;
-					delete hospAbroad[id];
-					return null;
+					if (/^In hospital\b/i.test(desc) && desc !== "In hospital") delete hospAbroad[id];
+					return hospAbroad[id] || null;
 				}
 				function abroadFlag(m) {
 					const where = abroadOf(m);
