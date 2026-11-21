@@ -1,7 +1,7 @@
 {
   "name": "dss",
-  "version": "0.7.91",
-  "description": "DSS (Dsuttz Scripts) \u2014 unified Torn userscript manager",
+  "version": "0.7.92",
+  "description": "DSS (Dsuttz Scripts) — unified Torn userscript manager",
   "private": true,
   "type": "module",
   "engines": {
