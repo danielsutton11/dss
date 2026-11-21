@@ -2100,6 +2100,31 @@ const hit = HOSP_SHORT.find(([re]) => re.test(d));
 return `Self-hosp \u00b7 ${hit ? hit[1] : (d.length > 28 ? d.slice(0, 27) + '\u2026' : d)}`;
   }
 
+  // ---- abroad flag next to the name: landed abroad, or in hospital abroad ----
+  // Torn words hospital abroad as "In a Swiss hospital for …" / "In an Emirati hospital for …".
+  const DEMONYM = { 'mexican': 'mexico', 'caymanian': 'cayman islands', 'canadian': 'canada', 'hawaiian': 'hawaii',
+    'british': 'united kingdom', 'argentinian': 'argentina', 'argentine': 'argentina', 'swiss': 'switzerland',
+    'japanese': 'japan', 'chinese': 'china', 'emirati': 'uae', 'south african': 'south africa' };
+  const hospAbroad = {};   // player_id -> country, kept while they stay in hospital (Torn's list only says "In hospital")
+  function abroadOf(m) {
+    const id = m.player_id;
+    if (m.status_state === 'Abroad') { delete hospAbroad[id]; return m.travel_destination || '?'; }
+    if (m.status_state !== 'Hospital') { delete hospAbroad[id]; return null; }
+    const desc = plain(m.status_description);
+    const hit = desc.match(/^In an? (.+?) hospital\b/i);
+    if (hit) return (hospAbroad[id] = DEMONYM[hit[1].toLowerCase()] || hit[1]);
+    if (desc === 'In hospital') return hospAbroad[id] || null;   // placeholder from Torn's list: keep what we knew
+    delete hospAbroad[id]; return null;                            // "In hospital for …": in Torn
+  }
+  function abroadFlag(m) {
+    const where = abroadOf(m);
+    if (!where) return '';
+    const NICE = { 'uae': 'the UAE', 'united kingdom': 'the UK', 'cayman islands': 'the Cayman Islands' };
+    const name = where === '?' ? 'another country' : NICE[flagKey(where)] || where.replace(/\b\w/g, c => c.toUpperCase());
+    const tip = m.status_state === 'Hospital' ? `In hospital in ${name}` : `Abroad in ${name}`;
+    return `<span class="abf" title="${esc(tip)}">${FLAG_SVG[flagKey(where)] ? flag(where) : PIN}</span>`;
+  }
+
   function statusInfo(m) {
 switch (m.status_state) {
   case 'Okay': return { rank: 1, cls: 'ok', text: 'OK' };
@@ -2594,6 +2619,9 @@ revive: svg('<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0
     ${B} tr.me .pname { color: #d6e7ff; font-weight: 600; }
     ${B} tr.unavail td:not(.keep) { opacity: .6; }
     ${B} .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 6px; vertical-align: 0; }
+    ${B} .abf { display: inline-block; margin-left: 5px; vertical-align: -2px; line-height: 0; }
+    ${B} .abf .flag { display: block; width: 14px; height: 14px; border-radius: 50%; box-shadow: 0 0 0 1px #ffffff40; overflow: hidden; }
+    ${B} .abf .pl { display: block; color: var(--blue); }
     ${B} .Online { background: var(--ok); } ${B} .Idle { background: var(--warn); } ${B} .Offline { background: #5b606a; }
     ${B} a.pname { color: var(--txt) !important; font-weight: 500; }
     ${B} a.pname:hover { color: #fff !important; text-decoration: underline; }
@@ -3549,7 +3577,7 @@ const rowList = rows.map(r => {
       </span></td>`;
 
   return [m.player_id, `<tr class="${trCls}" data-pid="${m.player_id}">
-        <td class="keep c-name"><span class="dot ${esc(m.active_status)}" title="${esc(m.active_status)}"></span><a class="pname" href="https://www.torn.com/profiles.php?XID=${m.player_id}" target="_blank">${esc(m.name)}</a>${d && isEnemy ? `<div class="m-dib ${myDib ? 'mine' : ''}">${esc(nameOf(d.player_id))}${wantsHelp ? ` <span class="help">${ICON.assist}</span>` : ''}${assists.length ? ` +${assists.length}` : ''}</div>` : ''}<div class="m-meta muted">Lvl ${m.level} \u00b7 <span data-ago="${Date.parse(m.active_stamp) || ''}">${ago(m.active_stamp)}</span></div></td>
+        <td class="keep c-name"><span class="dot ${esc(m.active_status)}" title="${esc(m.active_status)}"></span><a class="pname" href="https://www.torn.com/profiles.php?XID=${m.player_id}" target="_blank">${esc(m.name)}</a>${abroadFlag(m)}${d && isEnemy ? `<div class="m-dib ${myDib ? 'mine' : ''}">${esc(nameOf(d.player_id))}${wantsHelp ? ` <span class="help">${ICON.assist}</span>` : ''}${assists.length ? ` +${assists.length}` : ''}</div>` : ''}<div class="m-meta muted">Lvl ${m.level} \u00b7 <span data-ago="${Date.parse(m.active_stamp) || ''}">${ago(m.active_stamp)}</span></div></td>
         ${acts}
         ${isEnemy && dibsOn ? `<td class="keep c-dib">${d ? `<span class="dibber">${esc(nameOf(d.player_id))}${wantsHelp ? ` <span class="help" title="Assist requested">${ICON.assist}</span>` : ''}${assists.length ? ` <span class="as" title="${esc(assists.map(nameOf).join(', '))}">+${assists.length}</span>` : ''}</span>` : ''}</td>` : ''}
         ${COLS.map(k => ({
